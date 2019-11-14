@@ -3,11 +3,11 @@ import Field from '../Field/Field';
 
 import './Board.scss';
 
-const Board = ({ images }) => {
+const Board = ({ fields, handleClick }) => {
     return (
         <div className="board">
             {
-                images.map((image, i) => <Field key={i} image={image} />)
+                fields.map((field) => <Field key={field.id} field={field} handleClick={handleClick} />)
             }
         </div>
     )
