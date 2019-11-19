@@ -3,6 +3,7 @@ import randomImages from './randomImages';
 import Board from './components/Board/Board';
 import Counter from './components/Counter/Counter';
 import GameOver from './components/GameOver/GameOver';
+import WinningsList from './components/WinningsList/WinningsList';
 
 import firebase from "./Firebase";
 
@@ -13,7 +14,9 @@ class App extends React.Component {
     choosedImages: [],
     counter: null,
     gameOver: false,
-    playerName: ''
+    playerName: '',
+    winnings: [],
+    showWinners: false
   }
 
   componentDidMount() {
@@ -31,7 +34,7 @@ class App extends React.Component {
       }
     });
     this.stopCounter();
-    this.setState({ fields, counter: null });
+    this.setState({ fields, counter: null, winnings: [], showWinners: false });
     this.runCounter();
   }
   showImage = (id) => {
@@ -91,6 +94,7 @@ class App extends React.Component {
   }
 
   handleClick = (id) => {
+    this.setState({ showWinners: false });
     this.showImage(id);
   }
 
@@ -100,8 +104,8 @@ class App extends React.Component {
 
   addWinning = () => {
     const db = firebase.firestore();
-    db.collection("players").add({
-      name: this.state.playerName,
+    db.collection("winnings").add({
+      playerName: this.state.playerName,
       time: this.state.counter
     });
   }
@@ -116,12 +120,26 @@ class App extends React.Component {
     this.setState({playerName: e.target.value})
   }
 
+  getWinnings = () => {
+    const db = firebase.firestore();
+    db.collection("winnings").get()
+      .then((querySnapshot) => {
+        let winnings = [];
+        querySnapshot.forEach((doc) => {
+            winnings = [...winnings, doc.data()];
+        });
+        this.setState({ winnings, showWinners: true });
+    });
+  }
+
   render() {
     return (
       <div className="App">
         {this.state.counter !== null && <Counter time={this.state.counter} />}
         <Board fields={this.state.fields} handleClick={this.handleClick} />
         <button className="restart-btn" onClick={this.restart}>New memo</button>
+        <button onClick={this.getWinnings}>Show winners</button>
+        {this.state.showWinners && <WinningsList winnings={this.state.winnings} />}
         <GameOver
           gameOver={this.state.gameOver}
           time={this.state.counter}
