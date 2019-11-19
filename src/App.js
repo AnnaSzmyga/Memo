@@ -4,13 +4,16 @@ import Board from './components/Board/Board';
 import Counter from './components/Counter/Counter';
 import GameOver from './components/GameOver/GameOver';
 
+import firebase from "./Firebase";
+
 
 class App extends React.Component {
   state = {
     fields: [],
     choosedImages: [],
     counter: null,
-    gameOver: false
+    gameOver: false,
+    playerName: ''
   }
 
   componentDidMount() {
@@ -27,6 +30,7 @@ class App extends React.Component {
         solved: false
       }
     });
+    this.stopCounter();
     this.setState({ fields, counter: null });
     this.runCounter();
   }
@@ -90,18 +94,41 @@ class App extends React.Component {
     this.showImage(id);
   }
 
-  closeModal = () => {
+  closeGameOverModal = () => {
     this.setState({gameOver: false, counter: null})
   }
 
+  addWinning = () => {
+    const db = firebase.firestore();
+    db.collection("players").add({
+      name: this.state.playerName,
+      time: this.state.counter
+    });
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.addWinning();
+    this.closeGameOverModal();
+  }
+
+  handleChange = (e) => {
+    this.setState({playerName: e.target.value})
+  }
+
   render() {
-    //console.log(this.state.counter);
     return (
       <div className="App">
         {this.state.counter !== null && <Counter time={this.state.counter} />}
         <Board fields={this.state.fields} handleClick={this.handleClick} />
         <button className="restart-btn" onClick={this.restart}>New memo</button>
-        <GameOver gameOver={this.state.gameOver} closeModal={this.closeModal} time={this.state.counter} />
+        <GameOver
+          gameOver={this.state.gameOver}
+          time={this.state.counter}
+          playerName={this.state.playerName}
+          handleSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
+        />
       </div>
     );
   }
