@@ -7,6 +7,7 @@ class App extends React.Component {
   state = {
     fields: [],
     choosedImages: [],
+    gameOver: false
   }
 
   componentDidMount() {
@@ -28,7 +29,7 @@ class App extends React.Component {
   showImage = (id) => {
     if (this.state.choosedImages.length < 2) {
       const fields = this.state.fields.map(field => {
-        if (field.id === id) {
+        if (field.id === id && !field.solved) {
           field.id = id;
           field.active = true;
           this.setState({choosedImages: [...this.state.choosedImages, field.image]})
@@ -37,13 +38,11 @@ class App extends React.Component {
       });
       this.setState({ fields });
     }
-    //if (this.state.choosedImages.length === 2) {
-      setTimeout(() => this.checkPair(), 400);
-    //}
+    setTimeout(() => this.checkPair(), 400);
   }
+
   checkPair = () => {
     if (this.state.choosedImages.length === 2) {
-      console.log('check');
       const [image1, image2] = this.state.choosedImages;
       let fields;
       if (image1 === image2) {
@@ -61,14 +60,20 @@ class App extends React.Component {
         })
       }
       this.setState({ fields, choosedImages: [] });
+      this.checkMemo();
+    }
+  }
+
+  checkMemo = () => {
+    const unsolvedFields = this.state.fields.filter((field => !field.solved));
+    if (!unsolvedFields.length) {
+      console.log('end!');
+      this.setState({ gameOver: true});
     }
   }
 
   handleClick = (id) => {
     this.showImage(id);
-    // if (this.state.choosedImages.length === 2) {
-    //   setTimeout(() => this.checkPair(), 400);
-    // }
   }
 
   render() {
@@ -76,6 +81,7 @@ class App extends React.Component {
       <div className="App">
         <Board fields={this.state.fields} handleClick={this.handleClick} />
         <button className="restart-btn" onClick={this.restart}>New memo</button>
+        {this.state.gameOver && <p>Congratulations!</p>}
       </div>
     );
   }
