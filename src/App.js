@@ -1,6 +1,7 @@
 import React from 'react';
 import randomImages from './randomImages';
 import Board from './components/Board/Board';
+import Counter from './components/Counter/Counter';
 import GameOver from './components/GameOver/GameOver';
 
 
@@ -8,6 +9,7 @@ class App extends React.Component {
   state = {
     fields: [],
     choosedImages: [],
+    counter: null,
     gameOver: false
   }
 
@@ -25,7 +27,8 @@ class App extends React.Component {
         solved: false
       }
     });
-    this.setState({ fields });
+    this.setState({ fields, counter: null });
+    this.runCounter();
   }
   showImage = (id) => {
     if (this.state.choosedImages.length < 2) {
@@ -68,9 +71,19 @@ class App extends React.Component {
   checkMemo = () => {
     const unsolvedFields = this.state.fields.filter((field => !field.solved));
     if (!unsolvedFields.length) {
-      console.log('end!');
       this.setState({ gameOver: true});
+      this.stopCounter();
     }
+  }
+  runCounter = () => {
+    this.setState({counter: 0});
+    this.interval = setInterval(() => {
+      this.setState({ counter: this.state.counter + 1})
+    }, 1000)
+  }
+
+  stopCounter = () => {
+    clearInterval(this.interval);
   }
 
   handleClick = (id) => {
@@ -78,15 +91,17 @@ class App extends React.Component {
   }
 
   closeModal = () => {
-    this.setState({gameOver: false})
+    this.setState({gameOver: false, counter: null})
   }
 
   render() {
+    //console.log(this.state.counter);
     return (
       <div className="App">
+        {this.state.counter !== null && <Counter time={this.state.counter} />}
         <Board fields={this.state.fields} handleClick={this.handleClick} />
         <button className="restart-btn" onClick={this.restart}>New memo</button>
-        <GameOver gameOver={this.state.gameOver} closeModal={this.closeModal} />
+        <GameOver gameOver={this.state.gameOver} closeModal={this.closeModal} time={this.state.counter} />
       </div>
     );
   }
