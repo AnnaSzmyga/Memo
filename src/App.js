@@ -1,6 +1,7 @@
 import React from 'react';
 import randomImages from './randomImages';
 import Board from './components/Board/Board';
+import GameOver from './components/GameOver/GameOver';
 
 
 class App extends React.Component {
@@ -76,12 +77,16 @@ class App extends React.Component {
     this.showImage(id);
   }
 
+  closeModal = () => {
+    this.setState({gameOver: false})
+  }
+
   render() {
     return (
       <div className="App">
         <Board fields={this.state.fields} handleClick={this.handleClick} />
         <button className="restart-btn" onClick={this.restart}>New memo</button>
-        {this.state.gameOver && <p>Congratulations!</p>}
+        <GameOver gameOver={this.state.gameOver} closeModal={this.closeModal} />
       </div>
     );
   }
