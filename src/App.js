@@ -6,7 +6,7 @@ import Board from './components/Board/Board';
 class App extends React.Component {
   state = {
     fields: [],
-    choosedImages: []
+    choosedImages: [],
   }
 
   componentDidMount() {
@@ -37,33 +37,38 @@ class App extends React.Component {
       });
       this.setState({ fields });
     }
+    //if (this.state.choosedImages.length === 2) {
+      setTimeout(() => this.checkPair(), 400);
+    //}
   }
   checkPair = () => {
-    console.log('check');
-    const [image1, image2] = this.state.choosedImages;
-    if (image1 === image2) {
-      const fields = this.state.fields.map(field => {
-        if (field.image === image1) {
-          field.solved = true;
+    if (this.state.choosedImages.length === 2) {
+      console.log('check');
+      const [image1, image2] = this.state.choosedImages;
+      let fields;
+      if (image1 === image2) {
+        fields = this.state.fields.map(field => {
+          if (field.image === image1) {
+            field.solved = true;
+            field.active = false;
+          }
+          return field;
+        });
+      } else {
+        fields = this.state.fields.map(field => {
           field.active = false;
-        }
-        return field;
-      });
-      this.setState({ fields, choosedImages: [] });
-    } else {
-      const fields = this.state.fields.map(field => {
-        field.active = false;
-        return field;
-      })
+          return field;
+        })
+      }
       this.setState({ fields, choosedImages: [] });
     }
   }
 
   handleClick = (id) => {
     this.showImage(id);
-    if (this.state.choosedImages.length === 2) {
-      setTimeout(() => this.checkPair(), 700);
-    }
+    // if (this.state.choosedImages.length === 2) {
+    //   setTimeout(() => this.checkPair(), 400);
+    // }
   }
 
   render() {

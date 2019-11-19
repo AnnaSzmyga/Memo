@@ -21,4 +21,11 @@
             opacity: 0;
         }
     }
+
+    &.solved {
+        &::after {
+            opacity: 1;
+            background-color: pink;
+        }
+    }
 }
