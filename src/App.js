@@ -3,7 +3,7 @@ import randomImages from './randomImages';
 import Board from './components/Board/Board';
 import Counter from './components/Counter/Counter';
 import GameOver from './components/GameOver/GameOver';
-import WinningsList from './components/WinningsList/WinningsList';
+import WinnersList from './components/WinnersList/WinnersList';
 
 import firebase from "./Firebase";
 
@@ -15,7 +15,7 @@ class App extends React.Component {
     counter: null,
     gameOver: false,
     playerName: '',
-    winnings: [],
+    winners: [],
     showWinners: false
   }
 
@@ -34,7 +34,7 @@ class App extends React.Component {
       }
     });
     this.stopCounter();
-    this.setState({ fields, counter: null, winnings: [], showWinners: false });
+    this.setState({ fields, counter: null, winners: [] });
     this.runCounter();
   }
   showImage = (id) => {
@@ -102,9 +102,9 @@ class App extends React.Component {
     this.setState({gameOver: false, counter: null})
   }
 
-  addWinning = () => {
+  addWinner = () => {
     const db = firebase.firestore();
-    db.collection("winnings").add({
+    db.collection("winners").add({
       playerName: this.state.playerName,
       time: this.state.counter
     });
@@ -112,7 +112,7 @@ class App extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.addWinning();
+    this.addWinner();
     this.closeGameOverModal();
   }
 
@@ -120,16 +120,20 @@ class App extends React.Component {
     this.setState({playerName: e.target.value})
   }
 
-  getWinnings = () => {
+  getWinners = () => {
     const db = firebase.firestore();
-    db.collection("winnings").get()
+    db.collection("winners").get()
       .then((querySnapshot) => {
-        let winnings = [];
+        let winners = [];
         querySnapshot.forEach((doc) => {
-            winnings = [...winnings, doc.data()];
+            winners = [...winners, doc.data()];
         });
-        this.setState({ winnings, showWinners: true });
+        this.setState({ winners, showWinners: true });
     });
+  }
+
+  closeWinnersModal = () => {
+    this.setState({ showWinners: false });
   }
 
   render() {
@@ -138,8 +142,8 @@ class App extends React.Component {
         {this.state.counter !== null && <Counter time={this.state.counter} />}
         <Board fields={this.state.fields} handleClick={this.handleClick} />
         <button className="restart-btn" onClick={this.restart}>New memo</button>
-        <button onClick={this.getWinnings}>Show winners</button>
-        {this.state.showWinners && <WinningsList winnings={this.state.winnings} />}
+        <button onClick={this.getWinners}>Show winners</button>
+        <WinnersList winners={this.state.winners} showWinners={this.state.showWinners} closeWinnersModal={this.closeWinnersModal} />
         <GameOver
           gameOver={this.state.gameOver}
           time={this.state.counter}
