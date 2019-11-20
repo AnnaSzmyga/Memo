@@ -3,6 +3,8 @@
     height: 25%;
     position: relative;
     background-color: lightgray;
+    border-radius: 7px;
+    cursor: pointer;
 
     &__image {
         width: 100%;
@@ -12,6 +14,7 @@
         background-position: center;
         background-repeat: no-repeat;
         box-shadow: inset 0 0 10px #595656;
+        border-radius: 7px;
     }
 
     &__cover {
@@ -27,6 +30,7 @@
         align-items: center;
         box-shadow: inset 0 0 10px #595656;
         border: 2px solid #595656;
+        border-radius: 7px;
         transition: .25s;
 
         &:hover {
@@ -35,6 +39,7 @@
     }
 
     &.active {
+        cursor: auto;
         .field__cover {
             opacity: 0;
         }
@@ -42,6 +47,7 @@
 
     &.solved {
         opacity: 0;
+        cursor: auto;
         .field__cover {
             opacity: 0.1;
         }

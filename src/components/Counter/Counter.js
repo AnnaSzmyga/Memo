@@ -5,7 +5,10 @@ import './Counter.scss';
 const Counter = ({ time }) => {
 
     return (
-        <div className="counter">{`${time}s`}</div>
+        <div className="counter">
+            <p>Your time:</p>
+            <p className="counter__time">{time}</p>
+        </div>
     )
 }
 

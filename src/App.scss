@@ -1,26 +1,70 @@
 .app-container {
-    border: 1px solid green;
     width: 100%;
     max-width: 1000px;
-    padding: 15px;
+    padding: 30px 15px;
     margin: 0 auto;
+    display: flex;
+
+    @media (max-width: 1000px)  and (orientation: portrait) {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.panel {
+    max-width: 200px;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @media (max-width: 1000px)  and (orientation: portrait) {
+        flex-direction: row;
+        max-width: none;
+        width: 500px;
+        padding: 0;
+    }
+    @media (max-width: 767px) and (orientation: portrait) {
+        width: calc(100vw - 30px);
+    }
+    @media (max-width: 767px) and (orientation: landscape) {
+        width: calc(100vh - 45px);
+    }
+}
+
+.buttons {
+    @media (max-width: 1000px) and (orientation: portrait) {
+        max-width: 150px;
+    }
 }
 
 .btn {
+    width: 100%;
     padding: 10px 20px;
     color: #595656;
     box-shadow: 2px 2px 10px black;
     font-weight: 700;
     text-transform: uppercase;
-    border: none;
-    margin: 10px;
+    border: 3px solid #595656;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: .25s;
+    &:hover {
+        box-shadow: 4px 4px 15px black;
+    }
 }
 .restart-btn {
     @extend .btn;
     background-color: #f3510f;
+    &:hover {
+        background-color: lighten($color: #f3510f, $amount: 8%)
+    }
 }
 
 .winners-btn {
     @extend .btn;
-    background-color: #63a1ed;
+    background-color: #e8c96d;
+    &:hover {
+        background-color: lighten($color: #e8c96d, $amount: 8%)
+    }
 }

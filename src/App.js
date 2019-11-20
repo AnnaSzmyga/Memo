@@ -141,10 +141,14 @@ class App extends React.Component {
   render() {
     return (
       <div className="app-container">
-        {this.state.counter !== null && <Counter time={this.state.counter} />}
         <Board fields={this.state.fields} handleClick={this.handleClick} />
-        <button className="restart-btn" onClick={this.restart}>New memo</button>
-        <button className="winners-btn" onClick={this.getWinners}>Winners</button>
+        <div className="panel">
+          {this.state.counter !== null && <Counter time={this.state.counter} />}
+          <div className="buttons">
+            <button className="restart-btn" onClick={this.restart}>New memo</button>
+            <button className="winners-btn" onClick={this.getWinners}>Winners</button>
+          </div>
+        </div>
         <WinnersList winners={this.state.winners} showWinners={this.state.showWinners} closeWinnersModal={this.closeWinnersModal} />
         <GameOver
           gameOver={this.state.gameOver}
