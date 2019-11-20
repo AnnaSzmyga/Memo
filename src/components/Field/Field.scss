@@ -1,3 +1,15 @@
+@keyframes fadeInBounce {
+    0% {
+        transform: scale(0.2);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 .field {
     width: 25%;
     height: 25%;
@@ -56,5 +68,6 @@
     &__logo {
         width: 20%;
         height: 20%;
+        animation: fadeInBounce 1s;
     }
 }
