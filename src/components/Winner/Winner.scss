@@ -1,0 +1,8 @@
+.winner {
+    &:first-child td {
+        padding-top: 15px;
+    }
+    &:last-child td {
+        padding-bottom: 15px;
+    }
+}

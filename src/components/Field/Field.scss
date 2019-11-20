@@ -2,7 +2,6 @@
     width: 25%;
     height: 25%;
     position: relative;
-    background-color: lightgray;
     border-radius: 7px;
     cursor: pointer;
 
@@ -40,6 +39,7 @@
 
     &.active {
         cursor: auto;
+        background-color: lightgray;
         .field__cover {
             opacity: 0;
         }

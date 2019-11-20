@@ -1,0 +1,43 @@
+.winners {
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    background-color: #d3d3d3;
+    box-shadow: inset 0 0 20px #595656;
+    border-radius: 0.3rem;
+
+    &__heading {
+        text-transform: uppercase;
+        color: #f3510f;
+        text-shadow: 1px 1px black;
+    }
+
+    &__table {
+        background-color: lighten($color: #d3d3d3, $amount: 8%);
+        border: 1px solid #b4b4b4;
+        border-radius: 5px;
+        border-collapse: separate;
+        width: 100%;
+        margin-top: 30px;
+        box-shadow: 3px 3px 10px grey;
+
+        thead {
+            box-shadow: 0 0 10px grey;
+        }
+        th {
+            width: 50%;
+            padding: 5px;
+        }
+    }
+
+    &__close-btn {
+        position: absolute;
+        top: 5px;
+        right: 8px;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+}
