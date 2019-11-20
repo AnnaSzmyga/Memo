@@ -7,6 +7,8 @@ import WinnersList from './components/WinnersList/WinnersList';
 
 import firebase from "./Firebase";
 
+import './App.scss';
+
 
 class App extends React.Component {
   state = {
@@ -138,11 +140,11 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="app-container">
         {this.state.counter !== null && <Counter time={this.state.counter} />}
         <Board fields={this.state.fields} handleClick={this.handleClick} />
         <button className="restart-btn" onClick={this.restart}>New memo</button>
-        <button onClick={this.getWinners}>Show winners</button>
+        <button className="winners-btn" onClick={this.getWinners}>Winners</button>
         <WinnersList winners={this.state.winners} showWinners={this.state.showWinners} closeWinnersModal={this.closeWinnersModal} />
         <GameOver
           gameOver={this.state.gameOver}

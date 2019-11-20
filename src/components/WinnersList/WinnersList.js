@@ -5,7 +5,6 @@ import { Modal } from 'reactstrap';
 import './WinnersList.scss';
 
 const WinnersList = ({ winners, showWinners, closeWinnersModal }) => {
-    console.log(winners);
     return (
         <Modal className="winners" isOpen={showWinners} fade={true}>
             <h2 className="winners__heading">Memo winners</h2>

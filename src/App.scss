@@ -1,0 +1,26 @@
+.app-container {
+    border: 1px solid green;
+    width: 100%;
+    max-width: 1000px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.btn {
+    padding: 10px 20px;
+    color: #595656;
+    box-shadow: 2px 2px 10px black;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: none;
+    margin: 10px;
+}
+.restart-btn {
+    @extend .btn;
+    background-color: #f3510f;
+}
+
+.winners-btn {
+    @extend .btn;
+    background-color: #63a1ed;
+}

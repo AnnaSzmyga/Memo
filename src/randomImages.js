@@ -1,4 +1,4 @@
-const initialImages = ["dog1.png", "dog2.png", "dog3.png", "dog4.png", "dog5.png", "dog6.png", "dog7.png", "dog8.png"];
+const initialImages = ["img1.png", "img2.png", "img3.png", "img4.png", "img5.png", "img6.png", "img7.png", "img8.png"];
 
 const randomImages = () => {
   let images = [...initialImages, ...initialImages];

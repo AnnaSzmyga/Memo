@@ -1,8 +1,10 @@
 .board {
-    width: 800px;
-    height: 800px;
+    width: 700px;
+    height: 700px;
     display: flex;
     flex-wrap: wrap;
     margin: 0 auto;
-    border: 1px solid black;
+    background-color: #595656;
+    border: 5px solid #595656;
+    box-shadow: 0 0 20px black;
 }
